@@ -1,0 +1,734 @@
+/** @const */ var nul = null;
+/** @const */ var tru = true;
+/** @const */ var fals = false;
+
+var enable_errorhandler = 1;
+var errstr = "";
+var disable_errors = 0;
+var on_errorhandler = 0;
+
+if (typeof (user_is_admin_g) == "undefined")
+    user_is_admin_g = 0;							//set to "1" or "true" programmatically if the user is admin and should see all javascript error messages
+
+var user_is_admin = user_is_admin_g;
+
+var in_senddata = fals;
+var senddata_queue = new Array(); 
+var senddata_queue_readPointer = 0;
+
+var errorReport_senddata_queue = "";
+var errorReport_senddata_callback_set = fals;
+
+var moveLog_senddata_queue = "";
+var moveLog_senddata_callback_set = fals;
+
+/** @const */ var win = window;
+/** @const */ var doc = document;
+/** @const */ var loc = win.location;
+
+var getElementById = function (x) { return doc.getElementById(x); }     //for some reason the doc.getElementById() function cannot be referenced directly, results in: [Exception... "Could not convert JavaScript argument"  nsresult: "0x80570009 (NS_ERROR_XPC_BAD_CONVERT_JS)"  location: "JS frame :: http://www.......... :: P :: line 8"  data: no]
+
+/** @const */ var floorF = Math.floor;
+/** @const */ var randomF = Math.random;
+
+//###################################################################################
+
+/** @const */ var ie4 = (doc.all) ? tru : fals;
+
+var browser = "";
+var IE_version = "";
+
+var nav = navigator;
+
+if (ie4) {
+
+    var useragent_exception;
+
+    try {
+        browser = nav.userAgent;
+        try {
+            IE_version = nav.appVersion;
+        }
+        catch (useragent_exception) {
+            IE_version = "?";
+        }
+    }
+    catch (useragent_exception)	//mingi IE7 bugi ei lase navigator.userAgent propi lugeda dialoogi aknas
+    {
+        browser = "Mozilla/4.0 (compatible; MSIE 7.0)";
+        IE_version = "4.0 (compatible; MSIE 7.0)";
+    }
+}	//if (ie4)
+else {
+
+    browser = nav.userAgent;
+}
+
+//###################################################################################
+
+var currTimeStamp = function () {
+
+    return new Date().getTime();
+}
+
+//###################################################################################
+
+var getSessionId = function () {
+
+    //hack using window.name:
+    //http://stackoverflow.com/questions/1981673/persist-javascript-variables-across-pages
+
+    //TODO: other persistence methods
+
+    var prefix = "___greenwave";
+
+    if (win.name.substr(0, prefix.length) == prefix) {
+
+        return win.name.substr(12) + "/" + game_load_time;
+    }
+    else {
+
+        var session_id1 = "" + game_load_time + "_" + floorF(randomF() * (1 << 30));
+
+        win.name = prefix + session_id1;
+
+        return session_id1 + "/" + game_load_time;
+    }
+
+}   //var getSessionId = function () {
+
+//###################################################################################
+
+/** @const */ var game_load_time = currTimeStamp();
+/** @const */ var session_id = getSessionId();
+
+//###################################################################################
+
+var remove_andamp = function (str) {
+
+    var temp = str;
+
+    //alert(str);
+
+    var re_andamp1 = new RegExp("\\&amp\\;\\#", "gi");		//&# is the beginning of html code
+    temp = temp.replace(re_andamp1, "&#");
+
+    var re_andamp2 = new RegExp("\\&amp\\;nbsp\\;", "gi");
+    temp = temp.replace(re_andamp2, "&nbsp;");
+
+    var re_nbsp = new RegExp("\\&nbsp\\;", "gi");
+    temp = temp.replace(re_nbsp, " ");
+
+    //alert(temp);
+
+    return temp;
+
+}
+
+//###################################################################################
+
+var moz_html_decode = function (str) {
+
+
+    var re_htmlcode;
+    var out;
+    var pos;
+    var entrylen;
+    var entrychars;
+    var charcode;
+    var character;
+
+
+    re_htmlcode = new RegExp("&#[0-9]{1,4};", "i");
+
+
+    var fromCharCode = String.fromCharCode;
+
+    out = "";
+    pos = str.search(re_htmlcode);
+    while (pos != -1) {
+        out = out + str.substr(0, pos);
+        str = str.substr(pos);
+
+        entrylen = str.search(";") + 1;
+        entrychars = str.substr(2, entrylen - 3);
+
+        charcode = entrychars.valueOf();
+        character = fromCharCode(charcode);
+
+        out = out + character;
+
+        str = str.substr(entrylen);
+
+        pos = str.search(re_htmlcode);
+    };
+
+    out = out + str;
+
+
+
+
+    re_htmlcode = new RegExp("&#x[0-9a-f]{1,4};", "i");
+
+
+    str = out;
+
+    out = "";
+    pos = str.search(re_htmlcode);
+    while (pos != -1) {
+        out = out + str.substr(0, pos);
+        str = str.substr(pos);
+
+        entrylen = str.search(";") + 1;
+        entrychars = str.substr(3, entrylen - 4);
+
+        //charcode = entrychars.valueOf();	//alert(charcode);
+        charcode = parseInt(entrychars, 16);
+        character = fromCharCode(charcode);
+
+        out = out + character;
+
+        str = str.substr(entrylen);
+
+        pos = str.search(re_htmlcode);
+    };
+
+    out = out + str;
+
+
+
+    return out;
+
+} 	//function moz_html_decode(str)
+
+//###################################################################################
+
+function my_escape(txt_e) {
+
+    //alert(txt_e);
+
+    txt_e = escape(txt_e);
+
+    //alert(txt_e);
+
+    re_plus = new RegExp("\\+", "g");
+    txt_e = txt_e.replace(re_plus, "%2B");
+
+    re_equals = new RegExp("\\=", "g");
+    txt_e = txt_e.replace(re_equals, "%3D");
+
+    //re_and = new RegExp("&", "g");
+    //txt_e = txt_e.replace(re_and, "&#38;");
+
+    //alert(txt_e);
+
+    return txt_e;
+}
+
+//###################################################################################
+
+var my_alert = function (txt) {
+
+    txt = "" + txt;  //NB! convert exception object to string if necessary
+
+    var txt2 = moz_html_decode(remove_andamp(txt));
+
+    win.alert(txt2);
+}
+
+var adm_alert = function (str) {
+
+    //alert("?3");
+    if (user_is_admin) {
+        my_alert(str);
+    }
+}
+
+//###################################################################################
+
+//code adapted from http://www.tizag.com/ajaxTutorial/ajaxbrowsersupport.php
+//and http://www.sitepoint.com/forums/showthread.php?520812-textarea-size-Limit-in-AJAX
+
+var ajaxFunction = function () {
+
+    var ex;
+    var ajaxRequest = nul;  // The variable that makes Ajax possible!
+
+    try {
+        // Opera 8.0+, Firefox, Safari
+        if (win.XMLHttpRequest) {
+
+            ajaxRequest = new XMLHttpRequest();
+
+            if (ajaxRequest.overrideMimeType) {
+                // set type accordingly to anticipated content type
+                ajaxRequest.overrideMimeType("text/html");
+            }
+        }
+
+    }
+    catch (ex) {
+    }
+
+    if (!ajaxRequest) {
+
+        try {
+            // Internet Explorer Browsers
+            if (win.ActiveXObject) {
+
+                try {
+
+                    ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (ex) {
+
+                    try {
+                        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    catch (ex) {
+                        // Something went wrong
+                        //alert("Your browser broke!");
+                    }
+                }
+            }
+        }
+        catch (ex) {
+        }
+    }
+
+    return ajaxRequest;
+
+}   //function ajaxFunction() {
+
+//###################################################################################
+
+var senddata_readyStateChange = function (ajaxRequest, requestId, dest, key, data, callback) {
+
+    //TODO
+
+    /*
+    if (ajaxRequest.readyState < 4) {
+
+        getElementById(contentDiv).innerHTML = strLoading;
+    }
+    */
+
+    //TODO: test this error detection code
+
+    if (ajaxRequest.readyState == 4 || ajaxRequest.readyState == "complete") {
+
+        var ok = fals;
+
+        if (ajaxRequest.status == 200) {
+
+            //getElementById(contentDiv).innerHTML = ajaxRequest.responseText;
+
+            if (ajaxRequest.responseText != nul
+                && ajaxRequest.responseText.trim() == "#" + requestId + "#") {  //TODO: get rid of the BOM in the PHP output and .trim()
+
+                //alert("!");
+                ok = tru;
+            }
+            else {
+                if (user_is_admin)
+                    my_alert(ajaxRequest.responseText);
+            }
+        }
+        else {
+            if (user_is_admin)
+                my_alert(ajaxRequest.status);
+        }
+
+        if (!ok) {
+
+            //requeue the request
+            //win.setTimeout(senddata_new, 1000, dest, key, data);
+            win.setTimeout(function () { senddata_new_worker(dest, key, data, callback) }, 1000);     //try resend after one second
+        }
+        else {
+
+            if (callback != nul)
+                callback();
+
+            if (senddata_queue.length > 0) {    //new requests queued during the time this request was running
+
+                //TODO: merging the queued requests into packets of size up to N bytes
+
+                //we use FIFO queue here
+                var data = senddata_queue[senddata_queue_readPointer];
+                senddata_queue[senddata_queue_readPointer] = nul;  //free memory partially
+                senddata_queue_readPointer++;
+
+                if (senddata_queue_readPointer == senddata_queue.length) {
+
+                    //free the memory
+                    senddata_queue_readPointer = 0;
+                    senddata_queue.length = 0;
+                }
+
+                win.setTimeout(function () { senddata_new_worker(data[0], data[1], data[2], data[3]) }, 100);     //send after a little interval to prevent hogging the system
+
+                //NB! we do not clear the in_senddata lock here
+            }
+            else {
+
+                in_senddata = fals; //free the lock
+            }
+        }
+    }
+}   //var senddata_readyStateChange = function (ajaxRequest, requestId) {
+
+//###################################################################################
+
+var senddata_new = function (dest, key, data, callback) {
+
+    if (in_senddata) {
+
+        senddata_queue.push(new Array(dest, key, data, callback));
+    }
+    else {
+
+        in_senddata = tru;     //do not send more than one request at a time
+
+        senddata_new_worker(dest, key, data, callback);
+    }
+}
+
+var senddata_new_worker = function (dest, key, data, callback) {
+
+    var ex;
+    var ajaxRequest = ajaxFunction();
+
+    if (ajaxRequest == nul)
+        return;
+
+    // Create a function that will receive data sent from the server
+    /*
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4){
+            if (ajaxRequest.status == 200)
+            {
+                //response = ajaxRequest.responseText;
+                //xmlhttp.responseXML.getElementsByTagName('result')[0].firstChild.data;
+            }
+            else
+                {} 	//do your error handling here
+        }
+    }
+    */
+
+
+
+    try {
+        //ajaxRequest.open("GET", dest + "?" + key + "=" + my_escape(data), tru); 	//If set to fals, the call is made synchronous and the user�s browser will actually lock up until the response is received
+        //ajaxRequest.send(nul);
+
+        var requestId = currTimeStamp();
+
+
+        ajaxRequest.onreadystatechange = function () {
+
+            senddata_readyStateChange(ajaxRequest, requestId, dest, key, data, callback);
+        }
+
+
+        //var setRequestHeader = ajaxRequest.setRequestHeader;   //cob roland: results in error: "TypeError: 'setRequestHeader' called on an object that does not implement interface XMLHttpRequest."
+        //var setRequestHeader = function (x, y) { ajaxRequest.setRequestHeader(x, y); }
+
+        if (tru) {
+            var sendStr = "op=" + key + "&requestId=" + requestId + "&data=" + my_escape(data);
+
+            ajaxRequest.open("POST", dest, tru); 	//If set to fals, the call is made synchronous and the user�s browser will actually lock up until the response is received
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            ajaxRequest.setRequestHeader("Content-length", sendStr.length);
+            ajaxRequest.setRequestHeader("Connection", "close");
+            ajaxRequest.send(sendStr);
+        }
+        else {
+            var sendStr = "op=" + key + "&requestId=" + requestId + "&data=" + my_escape(data);
+
+            ajaxRequest.open("GET", dest + "?" + sendStr, tru); 	//If set to fals, the call is made synchronous and the user�s browser will actually lock up until the response is received
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            ajaxRequest.setRequestHeader("Content-length", sendStr.length);
+            ajaxRequest.setRequestHeader("Connection", "close");
+            ajaxRequest.send(nul);
+        }
+    }
+    catch (ex) {
+        //do nothing
+
+        if (user_is_admin)
+            my_alert(ex);
+
+        in_senddata = fals;    //NB!
+    }
+}   //var senddata_new = function (dest, key, data) {
+
+//###################################################################################
+
+//errorReport_senddata_queue = "";
+//var moveLog_senddata_queue
+
+var jsErrorReport_dest = "index.php";
+var jsErrorReport_opCode = "js_err";
+
+var queueErrorMsg_callback = function () {
+
+    if (errorReport_senddata_queue != "") {
+
+        var str2 = errorReport_senddata_queue;
+        errorReport_senddata_queue = "";
+        senddata_new(jsErrorReport_dest, jsErrorReport_opCode, str2, queueErrorMsg_callback);
+    }
+    else {
+        errorReport_senddata_callback_set = fals; //NB!
+    }
+}
+
+var queueErrorMsg = function (str) {
+
+    //var queueWasEmpty;
+    if (errorReport_senddata_queue != "") {  //queue and merge the error reports for later sending
+
+        var nullChar = String.fromCharCode(0);
+        errorReport_senddata_queue += nullChar + str.replace("\\", "\\\\").replace(nullChar, "\\" + nullChar);
+        //queueWasEmpty = fals;
+    }
+    else {
+        errorReport_senddata_queue = str;
+        //queueWasEmpty = tru;
+    }
+
+
+    if (!in_senddata
+        //|| queueWasEmpty    //NB! queue the callback for case when senddata is busy with some other kinds of message queues
+        || !errorReport_senddata_callback_set
+    ) {
+        var str2 = errorReport_senddata_queue;
+        errorReport_senddata_queue = "";
+        errorReport_senddata_callback_set = tru;   //NB!
+
+        senddata_new(jsErrorReport_dest, jsErrorReport_opCode, str2, queueErrorMsg_callback);
+    }
+
+}   //var queueErrorMsg(str) {
+
+//###################################################################################
+
+var jsMoveLog_dest = "index.php";
+var jsMoveLog_opCode = "log";
+
+var jsMoveLog_custom_callback = null;
+
+var queueMoveLogMsg_callback = function () {
+
+    var self = this;
+
+    if (moveLog_senddata_queue != "") {
+
+        var str2 = moveLog_senddata_queue;
+        moveLog_senddata_queue = "";
+        senddata_new(jsMoveLog_dest, jsMoveLog_opCode, str2, queueMoveLogMsg_callback);
+    }
+    else {
+        moveLog_senddata_callback_set = fals;  //NB!
+    }
+
+    if (jsMoveLog_custom_callback) {
+
+        jsMoveLog_custom_callback();
+        jsMoveLog_custom_callback = nul;
+    }
+}
+
+var queueMoveLogMsg = function (str, custom_callback) {
+
+
+
+    //var queueWasEmpty;
+    if (moveLog_senddata_queue != "") {  //queue and merge the log reports for later sending
+
+        var nullChar = String.fromCharCode(0);
+        moveLog_senddata_queue += nullChar + str.replace("\\", "\\\\").replace(nullChar, "\\" + nullChar);
+        //queueWasEmpty = fals;
+    }
+    else {
+        moveLog_senddata_queue = str;
+        //queueWasEmpty = tru;
+    }
+
+
+    if (!in_senddata
+        //|| queueWasEmpty    //NB! queue the callback for case when senddata is busy with some other kinds of message queues
+        || !moveLog_senddata_callback_set
+    ) {
+        var str2 = moveLog_senddata_queue;
+        moveLog_senddata_queue = "";
+        moveLog_senddata_callback_set = tru;   //NB!
+
+        if (custom_callback)    //NB! custom callback is set only when the senddata call is immediately available
+            jsMoveLog_custom_callback = custom_callback;
+
+        senddata_new(jsMoveLog_dest, jsMoveLog_opCode, str2, queueMoveLogMsg_callback);
+    }
+
+}   //var queueMoveLogMsg(str) {
+
+//###################################################################################
+
+win.onerror = function (err, file, line) {
+
+
+    var rval = tru;
+
+
+
+
+    //var jsErrorReport_dest = "index.php";
+
+
+
+    if (disable_errors)
+        return tru;
+
+    if (on_errorhandler)    //prevent recursive errors
+        return tru;
+
+    on_errorhandler = 1;
+
+
+    var req_reload = 0;
+
+
+    if (
+        //!body_loaded &&
+        (
+            false
+        //write your cases here a la...
+
+        //|| ((err == "Unterminated string constant") && (line == 1053))
+        //|| ((err == "Expected '}'") && (line == 1690))
+        )
+    ) {
+
+        req_reload = 1;
+
+        //some browser script download error
+    }
+
+
+    if (typeof (win.propName) != "undefined")
+        propname = win.propName;
+    else
+        propname = "";
+
+    var str = "JS Error."
+                    + "\nreq_reload: " + req_reload
+                    + "\nbrowser: " + browser
+                    + "\nIE_version: " + IE_version
+                    + "\nerr: " + err
+                    + "\nfile: " + file
+                    + "\nline: " + line
+                    + "\npropname: " + propname
+                    + "\nsession: " + session_id
+                    + "\n\n";
+    ;
+
+    errstr += str;
+
+
+
+
+    adm_alert(str);
+
+
+
+    //senddata_new(jsErrorReport_dest, "js_err", str);
+    queueErrorMsg(str);
+
+
+
+    if (req_reload) {
+        //my_alert("Lehek�lje skriptid Sinu browseri caches vajavad v�rskendamist.\rVajuta OK, siis need laaditakse uuesti."); 	//TODO: translate
+        my_alert("I am sorry. The scripts in Your browser's cache need to be updated.\rClick OK in order to reload them. The current game will be aborted."); 	//TODO: save current game if possible
+
+        //false - Default. Reloads the page from the browser cache.
+        //true - Reloads the page from the server.
+        loc.reload(tru);
+    }
+
+
+
+    on_errorhandler = 0;
+
+    return rval;
+
+} 	//function ErrorHandler(err, file, line)
+
+//###################################################################################
+
+subscribe_f = function () {
+
+    var email = doc.subscribe_form.subscribe_email.value;
+
+    if (email != "") {
+
+        var timeStamp = currTimeStamp();
+        var separator = "/";
+
+        var str = session_id
+                    + separator + timeStamp
+                    + separator + "subscribe"
+                    + separator + email
+
+        queueMoveLogMsg(str, function () { win.alert("Subscribed. Thank you for your interest!"); });
+
+    }   //if (email != "") {
+
+    return false;
+
+}   //subscribe_f = function () {
+
+//###################################################################################
+
+survey_f = function () {
+
+    var form = doc.survey_form;
+    var email = form.survey_email.value;
+
+    var timeStamp = currTimeStamp();
+    var separator = "/";
+
+    var str = session_id
+                + separator + timeStamp
+                + separator + "survey"
+                //+ separator + email
+
+    //str += separator + form.survey_os.value;
+
+    var prev_name = "";
+    for (var i = 0; i < form.elements.length; i++) {
+
+        if (form.elements[i].name != prev_name) {
+
+            prev_name = form.elements[i].name;
+            str += separator;
+        }
+
+        if (form.elements[i].type != "radio" || form.elements[i].checked) {
+
+            str += form.elements[i].value;
+        }
+    }
+
+    queueMoveLogMsg(str, function () { win.alert("Survey sent. Thank you for your help!"); });
+
+    return false;
+
+}   //subscribe_f = function () {
+
+//###################################################################################
+
+subscribe = subscribe_f;
+survey = survey_f;
+

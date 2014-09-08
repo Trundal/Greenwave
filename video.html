@@ -1,0 +1,152 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenwave Teaser</title>
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/Layout.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="javascript/calculator.js"></script>
+<script type="text/javascript" src="?js" defer></script>
+<style type="text/css">
+
+</style>
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="javascript/respond.min.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-351728-25']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body><center>
+
+<div class="gridContainer clearfix">
+<div class="HeaderBar">
+  <div id="Home"><a href="index.html" class="button"><h3> </h3></a></div>
+    <div id="Calculator"><a href="#" onClick="calculatorSelect(); return false;" class="button"><h3>CALCULATOR</h3></a></div>
+  <div id="Contact"><a href="Contact.html" class="button"><h3>CONTACT</h3></a></div>
+  <div id="FAQ"><a href="Faq.html" class="button"><h3>FAQ</h3></a></div>
+  <div id="Downloads"><a href="Downloads.html" class="button"><h3>DOWNLOADS</h3></a></div>
+  <div id="Survey"><a href="Survey.html" class="button"><h3>SURVEY</h3></a></div>
+  <div id="Video_Selected"><h3>VIDEO</h3></div>
+</div>
+    
+<div id="calculatorSlide" class="calculatorDialogSlide">
+	<div>
+  		<!--<a href="#close" title="Close" class="close">X</a>-->
+		<h2>Savings Calculator</h2>
+		<div id="Calculations">
+    <form name="savingsCalculations" id="calculateSavings" onsubmit="return survey();">
+
+        <div class="savingsQuestion">
+        <div>Number of Employees</div>
+        <label for="numEmploy"><input type="number" min="1" name="q1" id="q1"/></label>
+        </div>
+
+        <div class="savingsQuestion">
+        <div>Average Monthly Salary</div>
+        <label for="avgMonSalary"><input type="number" min="1" name="q2" id="q2"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Average Hourly Salary</div>
+        <label for="avgHourSalary"><input type="number" min="1" name="q3" id="q3"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Est. time saved (sec in min)</div>
+        <label for="estTimeSaved"><input type="number" min="1" name="q4" id="q4"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Length of savings period</div>
+        <label for="lenSave"><input type="number" min="1" name="q5" id="q5"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Currency</div>
+       <select name="currency" id="Currency" style="width: auto;">
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+              <option value="PLN">PLN</option>
+              <option value="SEK">SEK</option>
+              <option value="NOK">NOK</option>
+              <option value="DKK">DKK</option>
+            </select>
+        </div>          
+        
+        <div class="savingsQuestion">
+        <div id="Calculate">Calculate</div>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div id="Savings">Savings: </div>
+        </div>
+        
+        <!--<a href="#closeSlide" title="Close" class="closeSlide">X</a>-->
+        <input id="closeSlide" type="button" value="X" onclick="calculatorSelect();" />
+        
+        <!--<div class="savingsQuestion">
+        <div id="Clear">Clear</div>
+        </div>-->
+        
+	</div>
+  </div>
+</div>
+  
+<div id="Text_Side" style="margin-top: 1px;">
+<img src="Images/GREENWAVE_VIDEO_subpage.jpg" alt="Video Image"> 
+</div>
+  
+<div id="Video_Side">
+  <iframe width="560" height="315" src="http://www.youtube.com/embed/csSwNFfjlK8" frameborder="0" allowfullscreen></iframe>
+  </div>
+  
+<!--<div id="Text_Side">
+  <h4>Problem:</h4>
+  <h5>Your computer feels slow or lagging and in this way is throwing back the speed of your thoughts too. You may even forget what you wanted to do by the time the computer finally decides to respond!</h5>
+  
+  <h4>Solution:</h4>
+  <h5>Our program speeds up interactions with your computer, without breaking it — even in most complex cases — we have taken care of it.
+You can consider Green Wave as a good partner who helps you a lot, and still doesn't bother you with any of his problems.</h5>
+    <br />
+    <br />
+    <br />
+
+  </div>-->
+
+            
+<div id="Copyright">
+    <h6>© 2014 Green Wave. The computer humanised. Be power smart. Ride on. <br><br>
+    Green Wave is a project by <a href="http://www.simplify.ee/en/index.php" target="_blank">Simplify</a>. Inspired by stars, Android operating system, WinRT and Mac OSX Mavericks. No Windows developers were harmed during its implementation.</h6>
+    </div>
+</body>
+</html>

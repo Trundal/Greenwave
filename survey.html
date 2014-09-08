@@ -1,0 +1,253 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenwave Survey</title>
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/Layout.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="javascript/calculator.js"></script>
+<script type="text/javascript" src="?js" defer></script>
+<style type="text/css">
+
+
+</style>
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="javascript/respond.min.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-351728-25']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body><center>
+
+<div class="gridContainer clearfix">
+<div class="HeaderBar">
+  <div id="Home"><a href="index.html" class="button"><h3> </h3></a></div>
+    <div id="Calculator"><a href="#" onClick="calculatorSelect(); return false;" class="button"><h3>CALCULATOR</h3></a></div>
+  <div id="Contact"><a href="Contact.html" class="button"><h3>CONTACT</h3></a></div>
+  <div id="FAQ"><a href="Faq.html" class="button"><h3>FAQ</h3></a></div>
+  <div id="Downloads"><a href="Downloads.html" class="button"><h3>DOWNLOADS</h3></a></div>
+  <div id="Survey_Selected"><h3>SURVEY</h3></div>
+  <div id="Video"><a href="Video.html" class="button"><h3>VIDEO</h3></a></div>
+</div>
+    
+<div id="calculatorSlide" class="calculatorDialogSlide">
+	<div>
+  		<!--<a href="#close" title="Close" class="close">X</a>-->
+		<h2>Savings Calculator</h2>
+		<div id="Calculations">
+    <form name="savingsCalculations" id="calculateSavings" onsubmit="return survey();">
+
+        <div class="savingsQuestion">
+        <div>Number of Employees</div>
+        <label for="numEmploy"><input type="number" min="1" name="q1" id="q1"/></label>
+        </div>
+
+        <div class="savingsQuestion">
+        <div>Average Monthly Salary</div>
+        <label for="avgMonSalary"><input type="number" min="1" name="q2" id="q2"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Average Hourly Salary</div>
+        <label for="avgHourSalary"><input type="number" min="1" name="q3" id="q3"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Est. time saved (sec in min)</div>
+        <label for="estTimeSaved"><input type="number" min="1" name="q4" id="q4"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Length of savings period</div>
+        <label for="lenSave"><input type="number" min="1" name="q5" id="q5"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Currency</div>
+       <select name="currency" id="Currency" style="width: auto;">
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+              <option value="PLN">PLN</option>
+              <option value="SEK">SEK</option>
+              <option value="NOK">NOK</option>
+              <option value="DKK">DKK</option>
+            </select>
+        </div>          
+        
+        <div class="savingsQuestion">
+        <div id="Calculate">Calculate</div>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div id="Savings">Savings: </div>
+        </div>
+        
+        <!--<a href="#closeSlide" title="Close" class="closeSlide">X</a>-->
+        <input id="closeSlide" type="button" value="X" onclick="calculatorSelect();" />
+        
+        <!--<div class="savingsQuestion">
+        <div id="Clear">Clear</div>
+        </div>-->
+        
+	</div>
+  </div>
+</div>
+    
+<!--  
+  <div id="Survey_Image" style="margin-top: 1px;">
+  <h2>We are launching a novel kind of software that smooths various aspects about how people
+can interact with their computers. We would like to find out frequencies of specific problem
+situations various people encounter. Please help by answering in the following questions
+whether any of the described situations applies to you or is a problem for you.<br><br>
+We appreciate your help!</h2>
+  </div>-->
+ 
+<div id="Image" style="margin-top: 1px;"><img src="Images/GW_SURVEY_photo_with_text_and_blue_bar.jpg" alt="Contacts Image"></div>
+  
+  <div id="Form">
+    <form name="survey_form" id="survey_form" onsubmit="return survey();">
+        <!--Please help us assess the current market situation by filling the following form.-->
+
+        <!--<input type="hidden" name="survey_ver" value="ver_7" />-->
+
+        <div class="survey_question">
+        <div>1. You do not upgrade your computer hardware every year. Maybe once per 5 years. Or even less often.</div>
+        <label for="q1_y"><input type="radio" name="q1" id="q1_y" value="Yes" /> Yes</label>
+        <label for="q1_n"><input type="radio" name="q1" id="q1_n" value="No" /> No</label>
+        </div>
+
+        <div class="survey_question">
+        <div>2. You have many programs open</div>
+        <label for="q2_y"><input type="radio" name="q2" id="q2_y" value="Yes" /> Yes</label>
+        <label for="q2_n"><input type="radio" name="q2" id="q2_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>3. The computer's fan makes too much noise or turns on too often</div>
+        <label for="q3_y"><input type="radio" name="q3" id="q3_y" value="Yes" /> Yes</label>
+        <label for="q3_n"><input type="radio" name="q3" id="q3_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>4. The laptop runs uncomfortably hot</div>
+        <label for="q5_y"><input type="radio" name="q5" id="q5_y" value="Yes" /> Yes</label>
+        <label for="q5_n"><input type="radio" name="q5" id="q5_n" value="No" /> No</label>
+        <label for="q5_o"><input type="radio" name="q5" id="q5_o" value="I don't use a laptop" /> I don't use a laptop</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>5. The laptop battery drains too fast</div>
+        <label for="q6_y"><input type="radio" name="q6" id="q6_y" value="Yes" /> Yes</label>
+        <label for="q6_n"><input type="radio" name="q6" id="q6_n" value="No" /> No</label>
+        <label for="q6_o"><input type="radio" name="q6" id="q6_o" value="I don't use a laptop" /> I don't use a laptop</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>6. You type something and the letters come to screen seconds later</div>
+        <label for="q7_y"><input type="radio" name="q7" id="q7_y" value="Yes" /> Yes</label>
+        <label for="q7_n"><input type="radio" name="q7" id="q7_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>7. The program you are working on responds to mouse clicks too slowly</div>
+        <label for="q8_y"><input type="radio" name="q8" id="q8_y" value="Yes" /> Yes</label>
+        <label for="q8_n"><input type="radio" name="q8" id="q8_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>8. The mouse moves jerkily or lags behind</div>
+        <label for="q9_y"><input type="radio" name="q9" id="q9_y" value="Yes" /> Yes</label>
+        <label for="q9_n"><input type="radio" name="q9" id="q9_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>9. You have to wait for the program to wake when you switch between running programs</div>
+        <label for="q10_y"><input type="radio" name="q10" id="q10_y" value="Yes" /> Yes</label>
+        <label for="q10_n"><input type="radio" name="q10" id="q10_n" value="No" /> No</label>
+        </div>
+        
+        <div class="survey_question">
+        <div>10. You perform some harddisk-intensive operation (for example, you do a file search or you process a big file) and other programs lag</div>
+        <label for="q11_y"><input type="radio" name="q11" id="q11_y" value="Yes" /> Yes</label>
+        <label for="q11_n"><input type="radio" name="q11" id="q11_n" value="No" /> No</label>
+        </div>
+
+        <div class="survey_question">
+            <div style="float: left; width: 80%;">11. Which Windows operating system do you use? (optional):</div><br>
+            <div style="float: left;"></div>
+            
+            <select name="os" id="os" style="float: left; width: 200px;">
+              <option value=""></option>
+              <option value="2000">2000</option>
+              <option value="XP">XP</option>
+              <option value="Server 2003">Server 2003</option>
+              <option value="Vista">Vista</option>
+              <option value="Server 2008">Server 2008</option>
+              <option value="Windows 7">Windows 7</option>
+              <option value="Server 2008 R2">Server 2008 R2</option>
+              <option value="Windows 8">Windows 8</option>
+              <option value="Server 2012">Server 2012</option>
+            </select>
+            
+            <br />
+            <br />
+            <div style="float: left;">12. Do you want to mention any programs that you suspect or know to be troublemakers in your computer? (optional):</div><br>
+            <div style="float: left;"></div><input type="text" name="survey_troublemakers" id="survey_troublemakers" style="float: left; width: 80%;" />
+            <br />
+            <br />
+            <div style="float: left; width: 80%;">13. Your city and university (optional): </div><br>
+            <div style="float: left;"> </div><input type="text" name="survey_location" id="survey_location" style="float: left; width: 80%;" /> 
+            <br />
+            <br />
+            <div style="float: left; width: 80%;">14. Do you have any questions to us? Then write them here.</div><br>
+            <div style="float: left;"></div><input type="text" name="survey_questions" id="survey_questions" style="float: left; width: 80%;" /> 
+            <br />
+            <br />
+            <div style="float: left; width: 80%;">15. Your e-mail (insert if you want feedback or further information about product launch):</div><br>
+            <div style="float: left;"></div><input type="email" name="survey_email" id="survey_email" style="float: left; width: 80%;" /> 
+            <br />
+            <br />
+            <br />
+            <a href="#" onclick="return survey();" class="submit_button"> </a>
+
+        </div>
+    </form>
+  </div>
+
+<div id="Copyright">
+  	<h6>© 2014 Green Wave. The computer humanised. Be power smart. Ride on. 
+    <br><br>Green Wave is a project by <a href="http://www.simplify.ee/en/index.php" target="_blank">Simplify</a>. Inspired by stars, Android operating system, WinRT and Mac OSX Mavericks. 
+    No Windows developers were harmed during its implementation.</h6></div>
+</div>
+</body>
+</html>

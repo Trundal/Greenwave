@@ -1,0 +1,169 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenwave FAQ</title>
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/Layout.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="javascript/calculator.js"></script>
+<script type="text/javascript" src="?js" defer></script>
+<style type="text/css">
+
+
+</style>
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="javascript/respond.min.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-351728-25']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body><center>
+
+<div class="gridContainer clearfix">
+
+<div class="HeaderBar">
+  <div id="Home"><a href="index.html" class="button"><h3> </h3></a></div>
+  <div id="Calculator"><a href="#" onClick="calculatorSelect(); return false;" class="button"><h3>CALCULATOR</h3></a></div>
+  <div id="Contact"><a href="Contact.html" class="button"><h3>CONTACT</h3></a></div>
+  <div id="FAQ_Selected"><h3>FAQ</h3></div>
+  <div id="Downloads"><a href="Downloads.html" class="button"><h3>DOWNLOADS</h3></a></div>
+  <div id="Survey"><a href="Survey.html" class="button"><h3>SURVEY</h3></a></div>
+  <div id="Video"><a href="Video.html" class="button"><h3>VIDEO</h3></a></div>
+</div>
+    
+<div id="calculatorSlide" class="calculatorDialogSlide">
+	<div>
+  		<!--<a href="#close" title="Close" class="close">X</a>-->
+		<h2>Savings Calculator</h2>
+		<div id="Calculations">
+    <form name="savingsCalculations" id="calculateSavings" onsubmit="return survey();">
+
+        <div class="savingsQuestion">
+        <div>Number of Employees</div>
+        <label for="numEmploy"><input type="number" min="1" name="q1" id="q1"/></label>
+        </div>
+
+        <div class="savingsQuestion">
+        <div>Average Monthly Salary</div>
+        <label for="avgMonSalary"><input type="number" min="1" name="q2" id="q2"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Average Hourly Salary</div>
+        <label for="avgHourSalary"><input type="number" min="1" name="q3" id="q3"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Est. time saved (sec in min)</div>
+        <label for="estTimeSaved"><input type="number" min="1" name="q4" id="q4"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Length of savings period</div>
+        <label for="lenSave"><input type="number" min="1" name="q5" id="q5"/></label>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div>Currency</div>
+       <select name="currency" id="Currency" style="width: auto;">
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+              <option value="PLN">PLN</option>
+              <option value="SEK">SEK</option>
+              <option value="NOK">NOK</option>
+              <option value="DKK">DKK</option>
+            </select>
+        </div>          
+        
+        <div class="savingsQuestion">
+        <div id="Calculate">Calculate</div>
+        </div>
+        
+        <div class="savingsQuestion">
+        <div id="Savings">Savings: </div>
+        </div>
+        
+        <!--<a href="#closeSlide" title="Close" class="closeSlide">X</a>-->
+        <input id="closeSlide" type="button" value="X" onclick="calculatorSelect();" />
+        
+        <!--<div class="savingsQuestion">
+        <div id="Clear">Clear</div>
+        </div>-->
+        
+	</div>
+  </div>
+</div>
+  
+  <div id="Image" style="margin-top: 1px;"><img src="Images/GW_FAQ_photo_with_text_and_red_bar.jpg" alt="FAQ Image"></div>
+  <div id="Questions">
+  	<h1>FAQ</h1>
+  	<h4>Approximately how much energy is being saved?</h4>
+	<h5>For laptop computers you can save up to about 10W and about 2-3 times more for desktop computers. For a continuously-running laptop that comes to about 10 euros per year. Correspondingly, for desktop computers you'll save up to 20-30 euros per year. It's worth considering that energy is currently greatly underpriced and prices are expected to continue rising.</h5>
+    
+	<h4>Is there any alternative software that does similar things?</h4>
+	<h5>Yes, you can buy an Apple Mac and have OS X Mavericks installed on it. It is possible that OS X will offer a comparable experience. Apple has been experimenting with these ideas lately and OS X Mavericks is definitely a step in the right direction. Note that at this time you will still need to upgrade your Mac software, as not all programs have been (or will be) upgraded to take
+advantage of OS X Mavericks' capabilities.</h5>
+
+	<h4>Are there any hardware changes that I still might need to do in order to speed up my computer?</h4>
+	<h5>Yes, if possible, adding more RAM (random access memory) helps a lot in some cases. In this regard Green Wave cannot replace having more physical resources. Even so, it does its best to manage priorities for existing memory resources. Green Wave will notify you when it thinks that having more RAM might help.</h5>
+
+	<h4>Isn't it enough to update my computer using Windows Update?</h4>
+	<h5>Usually Windows Update does not offer the kinds of updates that would speed up your computer. The majority of updates address security and stability issues.</h5>
+    
+	<h4>Does Green Wave change the settings of my computer?</h4>
+	<h5>No, Green Wave works by only managing the system in real time, it does not change or store anything in system settings except inserting itself into startup programs list. When you quit the Green Wave program, the system is in the state it was before starting the program. This is one aspect where Green Wave differs from the other Windows optimisation softwares — instead of changing system settings, it interacts with it in real time. You can imagine the difference metaphorically speaking as difference between a good mechanic (programs that change system settings) and a good robot-driver (Green Wave). A mechanic can do only so much and the rest still depends on the driving style of the driver.</h5>
+	
+    <h4>Does Green Wave collect and send any information to the internet?</h4>
+	<h5>No, Green Wave does not send any information to the internet. We are intending to collect some anonymous performance statistics in such a manner that we log the information to text file, and when you are willing to help us you can send it to us by email. The file will be human-readable, this way you can always review what is inside this file before sending it.</h5>
+    
+	<h4>What kinds of resources does Green Wave manage? (technical)</h4>
+	<h5>Green Wave virtualises some of Windows API. It also manages processes' CPU usage, Processes' and Threads' CPU, IO, and Page priorities, Priority Boost flag, CPU Affinity, WorkingSet limits, Timer intervals and resolutions, enforces Timer, Sleep and synchronisation API timeout coalescing, manages various synchronisation and wait API calls, window messages, and clipboard ownership, speeds up window switching by boosting new foreground window proactively and enabling cache of the window contents where possible.</h5>
+
+	<h4>How does this software differ from other similar products? (technical)</h4>
+	<h5>We are not aware of other similar products. There is number of complementary programs that all work on different level — so one can use Green Wave and the other products in parallel. The other products we know of all work on hardware level, they optimise the energy use of hardware. Green Wave works on software level and optimises the energy use of software. It is important to note that in any case in order for the hardware optimisers to do their job they depend on the software. If the software does not release the resources then the hardware optimisers do not have a chance to switch the hardware into using more economic gears. They usually just turn on the economic modes in hardware, but newer Windows versions do that also automatically better than before. In any case, hardware optimisers do not participate in the work of other programs. Opposed to that, Green Wave actively participates and controls many software events and processes in the operating system. You can imagine the difference metaphorically speaking as difference between a good automatic transmission (programs that manage hardware resources) and a good robot-driver (Green Wave). An automatic transmission can do only so much and the rest still depends on the driving style of the driver.</h5>
+    
+	<h4>How does this software differ from resource management of WinRT available in Windows 8? (technical)</h4>
+	<h5>WinRT is meant mainly for use in mobile devices and requires programs to be specially (re)written in order to support it. All existing software is incompatible with WinRT. As a comparison, Green Wave is able to work with all programs. WinRT cannot manage resources for programs that need to be constantly running in background. Also one can assume that the bigger a program is the
+less likely that it will ever support resource management of WinRT. Finally, though WinRT does its specific job very well, it manages just a subset of the resources that Green Wave does. So again it is a complementary system.<br><br></h5>
+      <br />
+      <br />
+ </div>
+ 
+<div id="Copyright">
+  	<h6>© 2014 Green Wave. The computer humanised. Be power smart. Ride on. <br><br>
+  
+  Green Wave is a project by <a href="http://www.simplify.ee/en/index.php" target="_blank">Simplify</a>. Inspired by stars, Android operating system, WinRT and Mac OSX Mavericks. No Windows developers were harmed during its implementation.</h6></div>
+</div>
+
+</body>
+</html>

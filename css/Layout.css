@@ -1,0 +1,1571 @@
+@charset "UTF-8";
+/* Simple fluid media
+   Note: Fluid media requires that you remove the media's height and width attributes from the HTML
+   http://www.alistapart.com/articles/fluid-images/ 
+*/
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width:100%;
+}
+
+/*
+	Dreamweaver Fluid Grid Properties
+	----------------------------------
+	dw-num-cols-mobile:		5;
+	dw-num-cols-tablet:		8;
+	dw-num-cols-desktop:	12;
+	dw-gutter-percentage:	15;
+	
+	Inspiration from "Responsive Web Design" by Ethan Marcotte 
+	http://www.alistapart.com/articles/responsive-web-design
+	
+	and Golden Grid System by Joni Korpi
+	http://goldengridsystem.com/
+*/
+
+/* Mobile Layout: 480px and below. */
+
+body,td,th {
+	font-family: "Myriad Pro", Arial;
+	font-size: 15px;
+	color: #000000;
+	background-color: #E5E5E5;
+}
+
+.HeaderBar {
+	height: 54px;
+	width: 100%;
+	max-width: 1232px;
+	min-width: 600px;
+    z-index: 1;
+	background-color: #fff;
+    -moz-box-shadow: 1px 1px 20px rgba(0,0,0,0.6);
+	-webkit-box-shadow: 1px 1px 20px rgba(0,0,0,0.6);
+	box-shadow: 0px 2px 10px rgba(0,0,0,0.6);
+	position: fixed;
+}
+
+.gridContainer {
+	margin-left: 0%;
+	margin-right: 0%;
+	width: 100%;
+	min-width: 600px;
+	padding-left: 0%;
+	padding-right: 0%;
+	background-color: #FFF;
+	background-image: none;
+}
+#Header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+.savingsQuestion {
+	text-align: left;
+	font-family: "Myriad Pro", Arial;
+	font-size: 14px;
+	font-weight: lighter;
+	font-variant: normal;
+	margin-bottom: 0px;
+	text-align: left;
+	text-indent: 3px;
+	margin-top: 5px;
+	margin-left: 6px;
+    color: black;
+}
+/*
+.calculatorDialog {
+	position: fixed;
+	padding-left: 0px;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+
+.calculatorDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.calculatorDialog > div {
+	width: 200px;
+	height: 420px;
+	position: relative;
+	margin: 2% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	border-style: ridge;
+	border-width: 3px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #1A9679);
+	background: -webkit-linear-gradient(#fff, #1A9679);
+	background: -o-linear-gradient(#fff, #1A9679);
+}
+*/
+.calculatorDialogSlide {
+	/*position: fixed;
+	padding-left: 0px;
+	left: 0;
+    top: 0;
+	right: 0;
+	bottom: 0;*/
+    opacity: 0;
+	z-index: 0;
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+    -webkit-transition: opacity .15s ease-in, -webkit-transform .7s ease-in;
+    -moz-transition: opacity .15s ease-in, -moz-transform .7s ease-in;
+    -ms-transition: opacity .15s ease-in;
+    -o-transition: opacity .15s ease-in, -o-transform .7s ease-in;
+    transition: opacity .15s ease-in, transform .7s ease-in;
+	/*pointer-events: none;*/
+     float: right;
+    margin-right: 2%;
+    margin-top: -395px;
+    width: 200px;
+	height: 410px;
+	position: relative;
+	/*margin: 2% auto;*/
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	border-style: ridge;
+	border-width: 3px;
+	background: #fff;
+    -moz-box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	-webkit-box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	background: -moz-linear-gradient(#fff, #1A9679);
+    background: -webkit-linear-gradient(#fff, #1A9679);
+	background: -o-linear-gradient(#fff, #1A9679);
+    background: -ms-linear-gradient(#fff, #1A9679);
+    background: -linear-gradient(#fff, #1A9679);
+}
+
+#Calculator{
+	font-family: "Myriad Pro", Arial;
+	font-size: 14px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: lighter;
+	color: #1A9679;
+	text-align: center;
+	font-variant: normal;
+	text-transform: capitalize;
+    background-color:transparent;
+	margin: 0%;
+	padding-top: 0px;
+    border: 0px;
+	height: 54px;
+    cursor: pointer;
+    outline: none;
+}
+
+#Calculator:hover{
+    background: url(/Images/GW_top_bar_bar_full_col.png);
+}
+/*
+.calculatorDialogSlide:target {
+	pointer-events: auto;
+    -webkit-transition: .7s ease-in;
+	-moz-transition: .7s ease-in;
+	transition: .7s ease-in;
+    -webkit-transform: translate(0px, 430px);
+    -moz-transform: translate(0px, 430px);
+	transform: translate(0px, 430px);
+}
+/*
+.calculatorDialogSlide > div {
+   float: right;
+    margin-right: 2%;
+    margin-top: -390px;
+    width: 200px;
+	height: 410px;
+	position: relative;
+	/*margin: 2% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	border-style: ridge;
+	border-width: 3px;
+	background: #fff;
+    -moz-box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	-webkit-box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	box-shadow: 2px 2px 20px rgba(0,0,0,0.6);
+	background: -moz-linear-gradient(#fff, #1A9679);
+	background: -webkit-linear-gradient(#fff, #1A9679);
+	background: -o-linear-gradient(#fff, #1A9679); 
+}
+/*
+.close {
+    background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover {background: #1A9679; color: #000;}
+*/
+
+#closeSlide {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 18px;
+	position: absolute;
+	right: -10px;
+	text-align: center;
+    padding-top: 6px;
+	top: 410px;
+	width: 30px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+    background-color:#606061;
+    cursor: pointer;
+    outline: none;
+}
+
+#closeSlide:hover {background: #1A9679; color: #000;}
+
+#Savings {
+	height: 40px;
+	width: 160px;
+	margin-top: 10px;
+	float: left;
+	
+	padding: 0 10px;
+	
+	background: white;
+	border-radius: 3px;
+	box-shadow: inset 2px 2px rgba(0, 0, 0, .2);
+	
+	font-family: "Myriad Pro", Arial;
+    font-size: 18px;
+    font-weight: lighter;
+	line-height: 42px;
+	color: #555;
+	text-align: left;
+	letter-spacing: 1px;
+}
+
+#Currency {
+	clear: none;
+	float: left;
+    margin-left: 2px; 
+}
+
+#Calculate {
+	clear: none;
+	float: right;
+	height: 25px;
+	width: 80px;
+    font-family: "Myriad Pro", Arial;
+	font-size: 16px;
+	font-weight: lighter;
+    color: black;
+	border: thin solid #000;
+	border-radius: 4px;
+	box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	margin-right: 13px;
+	margin-top: -16px;
+	padding-top: 8px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #6C1310);
+	background: -webkit-linear-gradient(#fff, #6C1310);
+	background: -o-linear-gradient(#fff, #6C1310);
+    pointer-events: auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+#Calculate:hover {
+    background: #1A9679;
+    background: -moz-linear-gradient(#fff, #a54a47);
+	background: -webkit-linear-gradient(#fff, #a54a47);
+	background: -o-linear-gradient(#fff, #a54a47);
+    color: #000;
+}
+
+#Calculate:active {
+    background: #1A9679;
+    background: -moz-linear-gradient(#fff, #a54a47);
+	background: -webkit-linear-gradient(#fff, #a54a47);
+	background: -o-linear-gradient(#fff, #a54a47);
+    box-shadow: 0px 0px rgba(0, 0, 0, 0.2);
+    margin-right: 14px;
+    margin-top: -16px;
+    color: #000;
+}
+
+#Clear {
+	clear: both;
+	float: left;
+	height: 20px;
+	width: 40px;
+	border: thin solid #000;
+	border-radius: 4px;
+	box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	margin-right: 0px;
+	margin-top: 10px;
+	padding-top: 3px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #6C1310);
+	background: -webkit-linear-gradient(#fff, #6C1310);
+	background: -o-linear-gradient(#fff, #6C1310);	
+}
+/*
+#Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Survey_Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-position: center;
+	background-image: url(../Images/GW_SURVEY_photo_with_text_and_blue_bar_NOTEXT.png);
+	background-repeat: no-repeat;
+	height: 434px;
+}
+#Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	display: block;
+	height: 145px;
+	margin-bottom: 10px;
+	background-image: url(../Images/GW_FRONTPAGE_green_bar_with_Get_it_now_button.png);
+	background-position: center;
+	width: 100%;
+}
+#Control {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 90%;
+	display: block;
+}
+#Overhead {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 90%;
+	display: block;
+}
+#Integration {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 90%;
+	display: block;
+}
+#Compatibility {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 90%;
+	display: block;
+}
+#Home {
+	clear: none;
+	float: left;
+	margin-left: 1%;
+	width: 18%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top_bar_LOGOicon_no_bar.png);
+}
+#Home_Selected {
+	clear: none;
+	float: left;
+	margin-left: 1%;
+	width: 18%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+}
+#Video {
+	clear: none;
+	float: right;
+	width: 12%;
+	display: block;
+	height: 54px;
+}
+#Video_Selected {
+	clear: none;
+	float: right;
+	width: 12%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Survey {
+	clear: none;
+	float: right;
+	width: 15%;
+	display: block;
+	height: 54px;
+}
+#Survey_Selected {
+	clear: none;
+	float: right;
+	width: 15%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Downloads {
+	clear: none;
+	float: right;
+	width: 21%;
+	display: block;
+	height: 54px;
+	background-image: none;
+}
+#Downloads_Selected {
+	clear: none;
+	float: right;
+	width: 21%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#FAQ {
+	clear: none;
+	float: right;
+	width: 10%;
+	display: block;
+	height: 54px;
+}
+#FAQ_Selected{
+	clear: none;
+	float: right;
+	width: 10%;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Contact {
+	clear: none;
+	float: right;
+	width: 14%;
+	display: block;
+	height: 54px;
+	margin-right: 2%;
+}
+#Contact_Selected {
+	clear: none;
+	float: right;
+	width: 14%;
+	display: block;
+	height: 54px;
+	margin-right: 2%;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Copyright {
+	clear: none;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 120px;
+	background-color: #605D5B;
+}
+#Video_Side {
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 325px;
+	background-color: #444;
+}
+
+#Form {
+	clear: both;
+	float: left;
+	width: 100%;
+	display: block;
+}
+#Questions {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Download_Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Contact_Title {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland {
+	clear: none;
+	float: left;
+	width: 100%;
+	display: block;
+	padding-top: 3%;
+}
+#Margo {
+	clear: none;
+	float: left;
+	width: 100%;
+	display: block;
+	padding-top: 3%;
+}
+#Janek {
+	clear: none;
+	float: left;
+	width: 100%;
+	display: block;
+	padding-top: 3%;
+}
+#Question_Field {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: inline-block;
+	padding-left: 7%;
+	text-align: left;
+}
+#Roland_Info {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland_Text {
+	clear: none;
+	float: left;
+	margin-left: auto;
+	width: 180px;
+	border: thin solid #FF0;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 0px;
+}
+#Green_Bar {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 27px;
+	background-image: url(../Images/GREEN_BAR.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#Text_Side {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 100%;
+	display: block;
+	background-color: #444;
+}
+#strip {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #444;
+	height: 15px;
+}
+*/
+#Image {
+	clear: both;
+	float: left;
+	padding-top: 10px;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+/*#Survey_Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-position: center center;
+	background-image: url(../Images/GW_SURVEY_photo_with_text_and_blue_bar_NOTEXT.jpg);
+}*/
+#Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	display: block;
+	height: 145px;
+	background-image: url(../Images/GW_FRONTPAGE_green_bar_with_Get_it_now_button.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+}
+#Control {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Overhead {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Integration {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Compatibility {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Home {
+	clear: both;
+	float: left;
+	margin-left: 2%;
+	width: 82px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+	background-image: url(../Images/GW_top_bar_LOGOicon_no_bar.png);
+}
+#Home_Selected {
+	clear: both;
+	float: left;
+	margin-left: 2%;
+	width: 82px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+}
+
+#Video {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Video_Selected {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Survey {
+	clear: none;
+	float: right;
+	width: 70px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Survey_Selected {
+	clear: none;
+	float: right;
+	width: 70px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Downloads {
+	clear: none;
+	float: right;
+	width: 105px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Downloads_Selected {
+	clear: none;
+	float: right;
+	width: 105px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#FAQ {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#FAQ_Selected{
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Contact {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 70px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Contact_Selected {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 70px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Calculator {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 105px;
+	display: block;
+	height: 54px;
+	margin-right: 2%;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Calculator_Selected {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 105px;
+	display: block;
+	height: 54px;
+	margin-right: 2%;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Copyright {
+	clear: both;
+	float: left;
+	width: 100%;
+	display: block;
+	height: 140px;
+	background-color: #605D5B;
+	margin: 0;
+}
+#Form {
+	clear: both;
+	float: left;
+	padding-top: 20px;
+    padding-bottom: 40px;
+	width: 80%;
+	display: block;
+}
+#Questions {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Download_Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Contact_Title {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland {
+	clear: both;
+	padding-top: 40px;
+	float: left;
+	margin-left: 0;
+	width: 33%;
+	display: block;
+}
+#Margo {
+	clear: none;
+	padding-top: 40px;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Janek {
+	clear: none;
+	padding-top: 40px;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Question_Field {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland_Info {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland_Text {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 100%;
+	display: block;
+}
+#Green_Bar {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Text_Side {
+	clear: both;
+	float: left;
+	width: 100%;
+	display: block;
+	margin-left: 0%;
+	height: auto;
+}
+#Video_Side {
+	float: left;
+	width: 100%;
+	display: block;
+	background-color: #FFF;
+	height: 360px;
+	margin: 0px;
+	padding-top: 40px;
+}
+#Question_Us {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#strip {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #444;
+	height: 15px;
+}
+
+#Calculator:hover{
+    background: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Contact:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Downloads:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#Survey:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#FAQ:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Home:hover {
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+	background-repeat: no-repeat;
+}
+#Video:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+
+}
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+.gridContainer {
+	width: 100%;
+	min-width: 600px;
+	padding-left: 0%;
+	padding-right: 0%;
+	background-color: #FFF;
+}
+#Header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+/*#Survey_Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-position: center center;
+	background-image: url(../Images/GW_SURVEY_photo_with_text_and_blue_bar_NOTEXT.jpg);
+}*/
+#Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	display: block;
+	height: 145px;
+	background-image: url(../Images/GW_FRONTPAGE_green_bar_with_Get_it_now_button.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+}
+#Control {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Overhead {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Integration {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Compatibility {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 45%;
+	display: block;
+}
+#Home {
+	clear: both;
+	float: left;
+	margin-left: 2%;
+	width: 82px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Home_Selected {
+	clear: both;
+	float: left;
+	margin-left: 2%;
+	width: 82px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+}
+#Video {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Video_Selected {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Survey {
+	clear: none;
+	float: right;
+	width: 70px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Survey_Selected {
+	clear: none;
+	float: right;
+	width: 70px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Downloads {
+	clear: none;
+	float: right;
+	width: 105px;
+	display: block;
+	height: 54px;
+	background-image: none;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Downloads_Selected {
+	clear: none;
+	float: right;
+	width: 105px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#FAQ {
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#FAQ_Selected{
+	clear: none;
+	float: right;
+	width: 65px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Contact {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 70px;
+	display: block;
+	height: 54px;
+	-webkit-transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-ms-transition: all 1s ease 0s;
+	-o-transition: all 1s ease 0s;
+	transition: all 1s ease 0s;
+}
+#Contact_Selected {
+	clear: none;
+	float: right;
+	margin-left: 0%;
+	width: 70px;
+	display: block;
+	height: 54px;
+	background-image: url(../Images/GW_top-bar_bar_half_col.png);
+}
+#Copyright {
+	clear: both;
+	float: left;
+	width: 100%;
+	display: block;
+	height: 140px;
+	background-color: #605D5B;
+	margin: 0;
+}
+#Form {
+	clear: both;
+	float: left;
+	padding-top: 20px;
+    padding-bottom: 40px;
+	width: 80%;
+	display: block;
+}
+#Questions {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Download_Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Contact_Title {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 33%;
+	display: block;
+}
+#Margo {
+	clear: none;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Janek {
+	clear: none;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Question_Field {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland_Info {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland_Text {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 100%;
+	display: block;
+}
+#Green_Bar {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Text_Side {
+	clear: none;
+	float: left;
+	width: 100%;
+	display: block;
+	margin-left: 0%;
+	height: auto;
+}
+#Video_Side {
+	float: left;
+	width: 100%;
+	display: block;
+	background-color: #FFF;
+	height: 360px;
+	margin: 0px;
+	padding-top: 40px;
+}
+#Question_Us {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#strip {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Calculator:hover{
+    background: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Contact:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Downloads:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#Survey:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#Home:hover {
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+}
+#FAQ:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Home:hover {
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+	background-repeat: no-repeat;
+}
+#Video:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}    
+
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+.gridContainer {
+	width: 100%;
+	max-width: 1232px;
+	padding-left: 0%;
+	padding-right: 0%;
+	margin: 0;
+	background-color: #FFF;
+}
+#Header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 54px;
+	background-color: #FFF;
+}
+#Image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Text {
+	clear: both;
+	float: left;
+	display: block;
+	height: 145px;
+	background-image: url(../Images/GW_FRONTPAGE_green_bar_with_Get_it_now_button.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 20px;
+	margin-left: 0px;
+}
+#Control {
+	clear: both;
+	float: left;
+	margin-left: 4%;
+	width: 22%;
+	display: block;
+	height: 175px;
+}
+#Overhead {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 22%;
+	display: block;
+}
+#Integration {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 22%;
+	display: block;
+}
+#Compatibility {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 22%;
+	display: block;
+}
+#Copyright {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 120px;
+	background-color: #605D5B;
+}
+#Form {
+	clear: both;
+	float: left;
+	padding-top: 20px;
+    padding-bottom: 40px;
+	width: 80%;
+	display: block;
+}
+#Questions {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Download_Text {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Contact_Title {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#Roland {
+	clear: both;
+	float: left;
+	margin-left: 0px;
+	width: 33%;
+	display: block;
+}
+#Margo {
+	clear: none;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Janek {
+	clear: none;
+	float: left;
+	width: 33%;
+	display: block;
+}
+#Question_Field {
+	clear: both;
+	float: left;
+	width: 100%;
+	display: block;
+}
+#Roland_Text {
+	margin-left: auto;
+	width: 180px;
+	display: block;
+	float: left;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 0px;
+}
+#Green_Bar {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 27px;
+	background-image: url(../Images/GREEN_BAR.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#Text_Side {
+	clear: none;
+	float: left;
+	display: block;
+	width: 100%;
+	background-color: #444;
+	padding-left: 0%;
+	margin: 0%;
+}
+#Video_Side {
+	float: left;
+	width: 100%;
+	display: block;
+	background-color: #FFF;
+	height: 360px;
+	margin: 0px;
+	padding-top: 40px;
+}
+#Calculator:hover{
+    background: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Contact:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Downloads:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#Survey:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+	font-weight: bold;
+}
+#Home:hover {
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+}
+#FAQ:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#Home:hover {
+	background-image: url(../Images/GW_top_bar_LOGOicon_with_bar.png);
+	background-repeat: no-repeat;
+}
+#Video:hover {
+	background-image: url(../Images/GW_top_bar_bar_full_col.png);
+}
+#strip {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	height: 15px;
+	background-color: #444;
+}
+#Question_Us {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+}
